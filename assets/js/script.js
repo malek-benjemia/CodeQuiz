@@ -26,7 +26,6 @@ questionsBank.push(questionDataObj0);
 questionsBank.push(questionDataObj1);
 
 // variable to hold the main sections of the html
-
 var timerParentZoneEl = document.getElementById("timer-parent-zone");
 var pageContentEl = document.getElementById("page-content");
 var begSectionEl = document.getElementById("begin-section");
