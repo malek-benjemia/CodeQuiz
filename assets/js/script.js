@@ -5,30 +5,31 @@ var myTimerVar = null;
 // create array to hold questions, possible answers and correct answer
 var questionsBank = [];
 
+var questionDataObj0 = {
+    question: "Q0",
+    answer1: "A01",
+    answer2: "A02",
+    answer3: "A03", 
+    answer4: "A04",
+    correctAnswerIndex: 4
+  };
 var questionDataObj1 = {
     question: "Q1",
     answer1: "A11",
     answer2: "A12",
     answer3: "A13", 
     answer4: "A14",
-    correctAnswerIndex: 4
-  };
-var questionDataObj2 = {
-    question: "Q2",
-    answer1: "A21",
-    answer2: "A22",
-    answer3: "A23", 
-    answer4: "A24",
     correctAnswerIndex: 3
 };
 
+questionsBank.push(questionDataObj0);
 questionsBank.push(questionDataObj1);
-questionsBank.push(questionDataObj2);
 
 // variable to hold the main sections of the html
 
 var timerParentZoneEl = document.getElementById("timer-parent-zone");
 var pageContentEl = document.getElementById("page-content");
+var begSectionEl = document.getElementById("begin-section");
 
 // display the timer
 var timerDisplay = function() {
@@ -71,17 +72,17 @@ var quizzQuestionDisplay = function() {
                 answerOptionEl.textContent = answerChoices[i];
                 // append to select
                 answersSelectEl.appendChild(answerOptionEl);
-            }
+            };
         // listen to choice selection => display correct answer and clear question i
         
-    }
+    };
 };
 
 // upon clicking Start Quiz
-var startQuizButtonHandler = function(event) {
+var startQuizButtonHandler = function() {
     // get target element from event -> var targetEl = event.target;
     var myobj = document.getElementById("begin-section");
-    myobj.remove(); 
+    if (myobj) {myobj.remove(); };
     var sectionEl = document.createElement("section");
     sectionEl.id = "question-zone";
     sectionEl.textContent = "";
@@ -94,13 +95,5 @@ var startQuizButtonHandler = function(event) {
     myTimerVar = setInterval(myTimer, 3600)
 };
 
-
-
-
-var quizzAnswerDisplay = function(event) {
-    event.preventDefault();
-};
-
-
 // for Quiz Start button
-pageContentEl.addEventListener("click", startQuizButtonHandler);
+begSectionEl.addEventListener("click", startQuizButtonHandler);
