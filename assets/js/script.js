@@ -17,31 +17,25 @@ questionsBank.push(questionDataObj2);
 
 // variable to hold the main section of the html
 var pageContentEl = document.querySelector("#page-content");
+var pagebeginSectionEl = document.querySelector("begin-section");
 
-// display the quizz initial message
-var quizzBegin = function() {
-    var quizzBegTextEl = document.createElement("h1");
-    quizzBegTextEl.textContent = "Code Quiz Challenge";
-    pageContentEl.appendChild(quizzBegTextEl);
-
-    var quizzCoreTextEl = document.createElement("p");
-    //quizzCoreTextEl.className = "";
-    quizzCoreTextEl.innerHTML = "Try to answer the following code related questions within the time limit.</br>Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
-    pageContentEl.appendChild(quizzCoreTextEl);
-
-    var quizzButtonEl = document.createElement("button");
-    //quizzButtonEl.className = "";
-    quizzButtonEl.textContent = "Start Quiz";
-    pageContentEl.appendChild(quizzButtonEl);
-    
+var startQuizButtonHandler = function(event) {
+    // get target element from event -> var targetEl = event.target;
+    var myobj = document.getElementById("begin-section");
+    myobj.remove(); 
+  
+    quizzQuestionDisplay();
 };
 
-var quizzQuestionDisplay = function(event) {
-    event.preventDefault();
+
+var quizzQuestionDisplay = function() {
+    
 };
 
 var quizzAnswerDisplay = function(event) {
     event.preventDefault();
 };
 
-quizzBegin();
+
+// for Quiz Start button
+pageContentEl.addEventListener("click", startQuizButtonHandler);
