@@ -1,9 +1,48 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+  /* header */
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 25px 25px;
+  }
+
+  header a{
+    text-align: left;
+  }
+
+  header p .timer-parent-zone {
+    text-align: right;
+  }
+
+  /* main */
   .page-content {
-    text-align: center;
+    padding: 100px 100px;
     font-size: 34px;
+  }
+  .page-content h1 {
     font-weight: bold;
   }
-  
+  .begin-section {
+    text-align: center;
+  }
+  .question-zone {
+    text-align: left;
+  }
+  .answers {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .answers button {
+    justify-content: left;
+  }
+  .page-content .answer-zone {
+    text-align: left;
+  }
   button {
     padding: 10px;
     margin: 24px;
@@ -12,7 +51,7 @@
     background-color: #541561;
     color: white;
   }
-
-  button :hover{
+  button:hover {
     background-color: #ac50be;
   }
+

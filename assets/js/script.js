@@ -88,7 +88,6 @@ var saveInitialsScoreHandler = function(event) {
         score: scoreEl.textContent
     };
     currentHighScores.push(myScore);
-    console.log(currentHighScores);
     localStorage.setItem("initials-score", JSON.stringify(currentHighScores));
 };
 
@@ -117,41 +116,42 @@ var allDoneDisplay = function() {
 
 // display if the answer is correct or wrong
 var selectAnswerHandler = function(event) {
-    event.preventDefault();
-    var correctAnswerEl= document.getElementById("answer-zone");
-    if (event.target.getAttribute("answer-id") == questionsBank[event.target.getAttribute("question-id")].correctAnswerIndex)
-        {//display correct 
-        correctAnswerEl.textContent = "Correct";
-        
-        timerDisplay();
-
-            if (parseInt(event.target.getAttribute("question-id"))< questionsBank.length-1 && timer>0)
-            {
-            quizzQuestionDisplay(parseInt(event.target.getAttribute("question-id"))+1);
-            }
-            else 
-            {clearInterval(myTimerVar);
+    if (event.target.type == "submit") {
+        var correctAnswerEl= document.getElementById("answer-zone");
+        if (event.target.getAttribute("answer-id") == questionsBank[event.target.getAttribute("question-id")].correctAnswerIndex)
+            {//display correct 
+            correctAnswerEl.textContent = "Correct";
+            
             timerDisplay();
-            allDoneDisplay();
-            };
-        }
-    else
-        {//display wrong
-        timer = timer -10; 
-        correctAnswerEl.textContent = "Wrong";
-        
-        timerDisplay();
 
-            if (parseInt(event.target.getAttribute("question-id"))< questionsBank.length-1 && timer>0)
-            {
-            quizzQuestionDisplay(parseInt(event.target.getAttribute("question-id"))+1);
+                if (parseInt(event.target.getAttribute("question-id"))< questionsBank.length-1 && timer>0)
+                {
+                quizzQuestionDisplay(parseInt(event.target.getAttribute("question-id"))+1);
+                }
+                else 
+                {clearInterval(myTimerVar);
+                timerDisplay();
+                allDoneDisplay();
+                };
             }
-            else 
-            {clearInterval(myTimerVar);
+        else
+            {//display wrong
+            timer = timer -10; 
+            correctAnswerEl.textContent = "Wrong";
+            
             timerDisplay();
-            allDoneDisplay();
+
+                if (parseInt(event.target.getAttribute("question-id"))< questionsBank.length-1 && timer>0)
+                {
+                quizzQuestionDisplay(parseInt(event.target.getAttribute("question-id"))+1);
+                }
+                else 
+                {clearInterval(myTimerVar);
+                timerDisplay();
+                allDoneDisplay();
+                };
             };
-        };
+    };
 };
 
 // display the questions
@@ -171,18 +171,28 @@ var quizzQuestionDisplay = function(i) {
         questionEl.textContent = questionsBank[i].question;
         sectionEEl.appendChild(questionEl);
         
-        // display answers
+        // display possible answers
+
+        var answersEl = document.createElement("p");
+        answersEl.id = "answers";
+        answersEl.textContent = "";
+        sectionEEl.appendChild(answersEl);
+        
         var answerChoices = [questionsBank[i].answer1, questionsBank[i].answer2,questionsBank[i].answer3,questionsBank[i].answer4];
         for (var j = 0; j < answerChoices.length; j++) {
+            var pEl = document.createElement("p");
+            pEl.textContent = "";
+            answersEl.appendChild(pEl);
+
             var answersSelectEl = document.createElement("button");
             answersSelectEl.setAttribute("question-id", i);
             answersSelectEl.setAttribute("answer-id", j);
             answersSelectEl.textContent = answerChoices[j];
-            sectionEEl.appendChild(answersSelectEl);
+            answersEl.appendChild(answersSelectEl);
         }
 
         // listen to choice selection => display correct answer and clear question i
-        sectionEEl.addEventListener("click", selectAnswerHandler);
+        answersEl.addEventListener("click", selectAnswerHandler);
 
 };
 
