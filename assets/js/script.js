@@ -1,3 +1,6 @@
+// create a variable to hold the time
+var timer = 0;
+
 // create array to hold questions, possible answers and correct answer
 var questionsBank = [];
 
@@ -15,15 +18,33 @@ var questionDataObj2 = {
 questionsBank.push(questionDataObj1);
 questionsBank.push(questionDataObj2);
 
-// variable to hold the main section of the html
-var pageContentEl = document.querySelector("#page-content");
-var pagebeginSectionEl = document.querySelector("begin-section");
+// variable to hold the main sections of the html
 
+var timerParentZoneEl = document.querySelector(".timer-parent-zone");
+var pageContentEl = document.querySelector(".page-content");
+
+
+// display the timer
+var timerDisplay = function() {
+    var myobj = document.getElementById("timer-zone");
+    myobj.remove(); 
+    console.log(timer.toString());
+    console.log(timer);
+    var pageTimerEl = document.createElement("span");
+    pageTimerEl.id = "timer-zone";
+    pageTimerEl.textContent = timer.toString();
+    timerParentZoneEl.appendChild(pageTimerEl);
+};
+
+// upon clicking Start Quiz
 var startQuizButtonHandler = function(event) {
     // get target element from event -> var targetEl = event.target;
     var myobj = document.getElementById("begin-section");
     myobj.remove(); 
   
+    timer = 75;
+
+    timerDisplay();
     quizzQuestionDisplay();
 };
 
