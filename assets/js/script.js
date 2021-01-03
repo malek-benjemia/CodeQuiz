@@ -41,11 +41,40 @@ var timerDisplay = function() {
     timerParentZoneEl.appendChild(pageTimerEl);
 };
 
-// remove 1 unit to the timer each 60 milliseconds
+// remove 1 unit to the timer each 3600 milliseconds = 1 minute
 var myTimer = function(){
     timer--;
-    if (timer == 70 || timer == 60 ) {timerDisplay()};
+    if (timer == 70 || timer == 60 || timer == 30 || timer == 5) {timerDisplay()};
     if (timer <=0 ) {clearInterval(myTimerVar);};
+};
+
+// display the questions
+var quizzQuestionDisplay = function() {
+    var questionZoneEl= document.getElementById("question-zone");
+    for (var i = 0; i < questionsBank.length; i++) {
+        // display question
+        var questionEl = document.createElement("h2");
+        questionEl.id = "question";
+        questionEl.textContent = questionsBank[i].question;
+        questionZoneEl.appendChild(questionEl);
+        // display answers
+
+
+        var answersSelectEl = document.createElement("select");
+        answersSelectEl.setAttribute("question-id", i);
+        answersSelectEl.id = "select-answers";
+        questionZoneEl.appendChild(answersSelectEl);
+            var answerChoices = [questionsBank[i].answer1, questionsBank[i].answer2,questionsBank[i].answer3,questionsBank[i].answer4];
+            for (var i = 0; i < answerChoices.length; i++) {
+                // create option element
+                var answerOptionEl = document.createElement("option");
+                answerOptionEl.textContent = answerChoices[i];
+                // append to select
+                answersSelectEl.appendChild(answerOptionEl);
+            }
+        // listen to choice selection => display correct answer and clear question i
+        
+    }
 };
 
 // upon clicking Start Quiz
@@ -53,18 +82,20 @@ var startQuizButtonHandler = function(event) {
     // get target element from event -> var targetEl = event.target;
     var myobj = document.getElementById("begin-section");
     myobj.remove(); 
+    var sectionEl = document.createElement("section");
+    sectionEl.id = "question-zone";
+    sectionEl.textContent = "";
+    pageContentEl.appendChild(sectionEl);
   
     timer = 75;
 
     timerDisplay();
     quizzQuestionDisplay();
-    myTimerVar = setInterval(myTimer, 60)
+    myTimerVar = setInterval(myTimer, 3600)
 };
 
 
-var quizzQuestionDisplay = function() {
-    
-};
+
 
 var quizzAnswerDisplay = function(event) {
     event.preventDefault();
