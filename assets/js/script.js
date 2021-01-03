@@ -9,24 +9,52 @@ var myTimerVar = null;
 var questionsBank = [];
 
 var questionDataObj0 = {
-    question: "Q0",
-    answer1: "A00",
-    answer2: "A01",
-    answer3: "A02", 
-    answer4: "A03",
-    correctAnswerIndex: 1
+    question: "Commonly used data types DO NOT include",
+    answer1: "strings",
+    answer2: "booleans",
+    answer3: "alerts", 
+    answer4: "numbers",
+    correctAnswerIndex: 2
   };
 var questionDataObj1 = {
-    question: "Q1",
-    answer1: "A10",
-    answer2: "A11",
-    answer3: "A12", 
-    answer4: "A13",
+    question: "The condition in an if/else statement is enclosed with ___",
+    answer1: "quotes",
+    answer2: "curly brackets",
+    answer3: "parenthesis", 
+    answer4: "square brackets",
+    correctAnswerIndex: 2
+};
+var questionDataObj2 = {
+    question: "Arrays in JavaScript can be used to store",
+    answer1: "numbers and strings",
+    answer2: "other arrays",
+    answer3: "booleans", 
+    answer4: "all of the above",
+    correctAnswerIndex: 3
+};
+var questionDataObj3= {
+    question: "String values must be enclosed within ____ when being asigned to variables.",
+    answer1: "commas",
+    answer2: "curly brackets",
+    answer3: "quotes", 
+    answer4: "parenthesis",
+    correctAnswerIndex: 2
+};
+var questionDataObj4= {
+    question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+    answer1: "JavaScript",
+    answer2: "terminal/bash",
+    answer3: "for loops", 
+    answer4: "console.log",
     correctAnswerIndex: 3
 };
 
+
 questionsBank.push(questionDataObj0);
 questionsBank.push(questionDataObj1);
+questionsBank.push(questionDataObj2);
+questionsBank.push(questionDataObj3);
+questionsBank.push(questionDataObj4);
 
 // variable to hold the main sections of the html
 var timerParentZoneEl = document.getElementById("timer-parent-zone");
@@ -64,31 +92,16 @@ var saveInitialsScoreHandler = function(event) {
     localStorage.setItem("initials-score", JSON.stringify(currentHighScores));
 };
 
-// display high scores
-var highScoresDisplay = function() {
-    var scoreZoneEl= document.getElementById("high-scores-zone");
-    if (localStorage.getItem("initials-score"))
-    { 
-        var currentHighScoresD = JSON.parse(localStorage.getItem("initials-score"));
-        for (var i = 0; i < currentHighScoresD.length; i++) {
-                j=i+1;
-                var scoreEl = document.createElement("li");
-                scoreEl.textContent= j +". "+ currentHighScoresD[i].initials +" "+currentHighScoresD[i].score ;
-                scoreZoneEl.appendChild(scoreEl);
-        };       
-                
-    };
-};
-
 // display All Done Page
 var allDoneDisplay = function() {
     var questionZoneEl= document.getElementById("question-zone");
-    questionZoneEl.remove();
+    var questionEEl= document.getElementById("question-element");
+    questionEEl.remove();
 
     var sectionEl = document.createElement("section");
     sectionEl.id = "all-done";
     sectionEl.innerHTML = "<h2>All Done!</h2><p>Your final score is <span id='score'></span>.</p><p>Enter initials: </p>";
-    pageContentEl.appendChild(sectionEl);
+    questionZoneEl.appendChild(sectionEl);
 
     var scoreEl= document.getElementById("score");
     scoreEl.textContent = timer.toString() ;
@@ -105,15 +118,12 @@ var allDoneDisplay = function() {
 // display if the answer is correct or wrong
 var selectAnswerHandler = function(event) {
     event.preventDefault();
-    var questionZoneEl= document.getElementById("question-zone");
-    var correctAnswerEl = document.createElement("p");
-    correctAnswerEl.id = "correct-answer";
+    var correctAnswerEl= document.getElementById("answer-zone");
     if (event.target.getAttribute("answer-id") == questionsBank[event.target.getAttribute("question-id")].correctAnswerIndex)
         {//display correct 
         correctAnswerEl.textContent = "Correct";
-        questionZoneEl.appendChild(correctAnswerEl);
-     
-        setTimeout(timerDisplay,3000);
+        
+        timerDisplay();
 
             if (parseInt(event.target.getAttribute("question-id"))< questionsBank.length-1 && timer>0)
             {
@@ -129,9 +139,8 @@ var selectAnswerHandler = function(event) {
         {//display wrong
         timer = timer -10; 
         correctAnswerEl.textContent = "Wrong";
-        questionZoneEl.appendChild(correctAnswerEl);
- 
-        setTimeout(timerDisplay,3000);
+        
+        timerDisplay();
 
             if (parseInt(event.target.getAttribute("question-id"))< questionsBank.length-1 && timer>0)
             {
@@ -147,20 +156,20 @@ var selectAnswerHandler = function(event) {
 
 // display the questions
 var quizzQuestionDisplay = function(i) {
-
     var questionZoneEl= document.getElementById("question-zone");
-    questionZoneEl.remove();
-    var sectionEl = document.createElement("section");
-    sectionEl.id = "question-zone";
-    sectionEl.textContent = "";
-    pageContentEl.appendChild(sectionEl);
-    var questionZoneEl= document.getElementById("question-zone");
+    var questionEEl= document.getElementById("question-element");
+    questionEEl.remove();
+    var sectionEEl = document.createElement("section");
+    sectionEEl.id = "question-element";
+    sectionEEl.textContent = "";
+    questionZoneEl.appendChild(sectionEEl);
+    
 
         // display question
         var questionEl = document.createElement("h2");
         questionEl.id = "question";
         questionEl.textContent = questionsBank[i].question;
-        questionZoneEl.appendChild(questionEl);
+        sectionEEl.appendChild(questionEl);
         
         // display answers
         var answerChoices = [questionsBank[i].answer1, questionsBank[i].answer2,questionsBank[i].answer3,questionsBank[i].answer4];
@@ -169,11 +178,11 @@ var quizzQuestionDisplay = function(i) {
             answersSelectEl.setAttribute("question-id", i);
             answersSelectEl.setAttribute("answer-id", j);
             answersSelectEl.textContent = answerChoices[j];
-            questionZoneEl.appendChild(answersSelectEl);
+            sectionEEl.appendChild(answersSelectEl);
         }
 
         // listen to choice selection => display correct answer and clear question i
-        questionZoneEl.addEventListener("click", selectAnswerHandler);
+        sectionEEl.addEventListener("click", selectAnswerHandler);
 
 };
 
@@ -182,10 +191,21 @@ var startQuizButtonHandler = function() {
     // get target element from event -> var targetEl = event.target;
     var myobj = document.getElementById("begin-section");
     if (myobj) {myobj.remove(); };
-    var sectionEl = document.createElement("section");
-    sectionEl.id = "question-zone";
-    sectionEl.textContent = "";
-    pageContentEl.appendChild(sectionEl);
+
+    var sectionQEl = document.createElement("section");
+    sectionQEl.id = "question-zone";
+    sectionQEl.textContent = "";
+    pageContentEl.appendChild(sectionQEl);
+
+    var sectionEEl = document.createElement("section");
+    sectionEEl.id = "question-element";
+    sectionEEl.textContent = "";
+    sectionQEl.appendChild(sectionEEl);
+
+    var sectionAEl = document.createElement("section");
+    sectionAEl.id = "answer-zone";
+    sectionAEl.textContent = "";
+    pageContentEl.appendChild(sectionAEl);
   
     timer = 75;
 
@@ -196,6 +216,3 @@ var startQuizButtonHandler = function() {
 
 // for Quiz Start button
 begSectionEl.addEventListener("click", startQuizButtonHandler);
-
-// display high scores in a secondary page
-highScoresDisplay();
