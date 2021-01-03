@@ -1,3 +1,6 @@
+// will later hold the scores
+var currentHighScores= [];
+
 // create a variable to hold the time
 var timer = 0;
 var myTimerVar = null;
@@ -48,10 +51,17 @@ var myTimer = function(){
     if (timer <=0 ) {clearInterval(myTimerVar);};
 };
 
-// Save score
+// Save initials and score
 var saveInitialsScoreHandler = function(event) {
     var scoreEl= document.getElementById("score");
-    alert( event.target.value + scoreEl.textContent)
+    if (localStorage.getItem("initials-score")) { currentHighScores = JSON.parse(localStorage.getItem("initials-score"));};
+    var myScore = {
+        initials: event.target.value, 
+        score: scoreEl.textContent
+    };
+    currentHighScores.push(myScore);
+    console.log(currentHighScores);
+    localStorage.setItem("initials-score", JSON.stringify(currentHighScores));
 };
 
 // display All Done Page
@@ -78,6 +88,7 @@ var allDoneDisplay = function() {
 
 // display if the answer is correct or wrong
 var selectAnswerHandler = function(event) {
+    event.preventDefault();
     var questionZoneEl= document.getElementById("question-zone");
     var correctAnswerEl = document.createElement("p");
     correctAnswerEl.id = "correct-answer";
