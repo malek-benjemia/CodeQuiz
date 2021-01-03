@@ -63,19 +63,15 @@ var quizzQuestionDisplay = function() {
         questionZoneEl.appendChild(questionEl);
         
         // display answers
-        var answersSelectEl = document.createElement("select");
-        answersSelectEl.setAttribute("question-id", i);
-        answersSelectEl.id = "select-answers";
-        questionZoneEl.appendChild(answersSelectEl);
-            var answerChoices = [questionsBank[i].answer1, questionsBank[i].answer2,questionsBank[i].answer3,questionsBank[i].answer4];
-            for (var j = 0; j < answerChoices.length; j++) {
-                // create option element
-                var answerOptionEl = document.createElement("option");
-                answerOptionEl.textContent = answerChoices[j];
-                // append to select
-                answersSelectEl.appendChild(answerOptionEl);
-            }
-            
+        var answerChoices = [questionsBank[i].answer1, questionsBank[i].answer2,questionsBank[i].answer3,questionsBank[i].answer4];
+        for (var j = 0; j < answerChoices.length; j++) {
+            var answersSelectEl = document.createElement("button");
+            answersSelectEl.setAttribute("question-id", i);
+            answersSelectEl.setAttribute("answer-id", j);
+            answersSelectEl.textContent = answerChoices[j];
+            questionZoneEl.appendChild(answersSelectEl);
+        }
+
         // listen to choice selection => display correct answer and clear question i
         
     }
