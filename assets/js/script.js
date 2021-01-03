@@ -42,7 +42,7 @@ var timerDisplay = function() {
     timerParentZoneEl.appendChild(pageTimerEl);
 };
 
-// remove 1 unit to the timer each 3600 milliseconds = 1 minute
+// remove 1 unit to the timer each 1000 milliseconds = 1 second
 var myTimer = function(){
     timer--;
     if (timer == 70 || timer == 60 || timer == 30 || timer == 5) {timerDisplay()};
@@ -67,16 +67,24 @@ var selectAnswerHandler = function(event) {
         questionZoneEl.appendChild(correctAnswerEl);
         timer = timer -10;
         };
-    timerDisplay();
+        
+        myvarpause = setTimeout(timerDisplay(),3000);
+        if (parseInt(event.target.getAttribute("question-id"))< questionsBank.length)
+        {quizzQuestionDisplay(parseInt(event.target.getAttribute("question-id"))+1)};
+    
 };
 
 // display the questions
-var quizzQuestionDisplay = function() {
+var quizzQuestionDisplay = function(i) {
 
     var questionZoneEl= document.getElementById("question-zone");
+    questionZoneEl.remove();
+    var sectionEl = document.createElement("section");
+    sectionEl.id = "question-zone";
+    sectionEl.textContent = "";
+    pageContentEl.appendChild(sectionEl);
+    var questionZoneEl= document.getElementById("question-zone");
 
-    for (var i = 0; i < questionsBank.length; i++) {
-      
         // display question
         var questionEl = document.createElement("h2");
         questionEl.id = "question";
@@ -96,7 +104,6 @@ var quizzQuestionDisplay = function() {
         // listen to choice selection => display correct answer and clear question i
         questionZoneEl.addEventListener("click", selectAnswerHandler);
 
-    }
 };
 
 // upon clicking Start Quiz
@@ -112,8 +119,8 @@ var startQuizButtonHandler = function() {
     timer = 75;
 
     timerDisplay();
-    quizzQuestionDisplay();
-    myTimerVar = setInterval(myTimer, 60)
+    quizzQuestionDisplay(0);
+    myTimerVar = setInterval(myTimer, 1000)
 };
 
 // for Quiz Start button
