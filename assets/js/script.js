@@ -51,31 +51,34 @@ var myTimer = function(){
 
 // display the questions
 var quizzQuestionDisplay = function() {
+
     var questionZoneEl= document.getElementById("question-zone");
+
     for (var i = 0; i < questionsBank.length; i++) {
+      
         // display question
         var questionEl = document.createElement("h2");
         questionEl.id = "question";
         questionEl.textContent = questionsBank[i].question;
         questionZoneEl.appendChild(questionEl);
+        
         // display answers
-
-
         var answersSelectEl = document.createElement("select");
         answersSelectEl.setAttribute("question-id", i);
         answersSelectEl.id = "select-answers";
         questionZoneEl.appendChild(answersSelectEl);
             var answerChoices = [questionsBank[i].answer1, questionsBank[i].answer2,questionsBank[i].answer3,questionsBank[i].answer4];
-            for (var i = 0; i < answerChoices.length; i++) {
+            for (var j = 0; j < answerChoices.length; j++) {
                 // create option element
                 var answerOptionEl = document.createElement("option");
-                answerOptionEl.textContent = answerChoices[i];
+                answerOptionEl.textContent = answerChoices[j];
                 // append to select
                 answersSelectEl.appendChild(answerOptionEl);
-            };
+            }
+            
         // listen to choice selection => display correct answer and clear question i
         
-    };
+    }
 };
 
 // upon clicking Start Quiz
