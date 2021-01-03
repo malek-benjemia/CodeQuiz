@@ -51,7 +51,7 @@ var myTimer = function(){
     if (timer <=0 ) {clearInterval(myTimerVar);};
 };
 
-// Save initials and score
+// save initials and score
 var saveInitialsScoreHandler = function(event) {
     var scoreEl= document.getElementById("score");
     if (localStorage.getItem("initials-score")) { currentHighScores = JSON.parse(localStorage.getItem("initials-score"));};
@@ -62,6 +62,22 @@ var saveInitialsScoreHandler = function(event) {
     currentHighScores.push(myScore);
     console.log(currentHighScores);
     localStorage.setItem("initials-score", JSON.stringify(currentHighScores));
+};
+
+// display high scores
+var highScoresDisplay = function() {
+    var scoreZoneEl= document.getElementById("high-scores-zone");
+    if (localStorage.getItem("initials-score"))
+    { 
+        var currentHighScoresD = JSON.parse(localStorage.getItem("initials-score"));
+        for (var i = 0; i < currentHighScoresD.length; i++) {
+                j=i+1;
+                var scoreEl = document.createElement("li");
+                scoreEl.textContent= j +". "+ currentHighScoresD[i].initials +" "+currentHighScoresD[i].score ;
+                scoreZoneEl.appendChild(scoreEl);
+        };       
+                
+    };
 };
 
 // display All Done Page
@@ -180,3 +196,6 @@ var startQuizButtonHandler = function() {
 
 // for Quiz Start button
 begSectionEl.addEventListener("click", startQuizButtonHandler);
+
+// display high scores in a secondary page
+highScoresDisplay();
