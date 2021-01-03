@@ -49,6 +49,12 @@ var myTimer = function(){
     if (timer <=0 ) {clearInterval(myTimerVar);};
 };
 
+// Save score
+var saveInitialsScoreHandler = function(event) {
+    var scoreEl= document.getElementById("score");
+    alert( event.target.value + scoreEl.textContent)
+};
+
 // display All Done Page
 var allDoneDisplay = function() {
     var questionZoneEl= document.getElementById("question-zone");
@@ -62,7 +68,13 @@ var allDoneDisplay = function() {
     var scoreEl= document.getElementById("score");
     scoreEl.textContent = timer.toString() ;
     
+    var inputInitials = document.createElement("input");
+    inputInitials.type = "text";
+    inputInitials.id = "initials";
+    inputInitials.textContent ="";
+    sectionEl.appendChild(inputInitials);
 
+    inputInitials.addEventListener("change", saveInitialsScoreHandler);
 };
 
 // display if the answer is correct or wrong
@@ -105,9 +117,6 @@ var selectAnswerHandler = function(event) {
             allDoneDisplay();
             };
         };
- 
-       
-    
 };
 
 // display the questions
