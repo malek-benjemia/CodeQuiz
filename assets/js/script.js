@@ -7,18 +7,18 @@ var questionsBank = [];
 
 var questionDataObj0 = {
     question: "Q0",
-    answer1: "A01",
-    answer2: "A02",
-    answer3: "A03", 
-    answer4: "A04",
-    correctAnswerIndex: 4
+    answer1: "A00",
+    answer2: "A01",
+    answer3: "A02", 
+    answer4: "A03",
+    correctAnswerIndex: 1
   };
 var questionDataObj1 = {
     question: "Q1",
-    answer1: "A11",
-    answer2: "A12",
-    answer3: "A13", 
-    answer4: "A14",
+    answer1: "A10",
+    answer2: "A11",
+    answer3: "A12", 
+    answer4: "A13",
     correctAnswerIndex: 3
 };
 
@@ -49,6 +49,25 @@ var myTimer = function(){
     if (timer <=0 ) {clearInterval(myTimerVar);};
 };
 
+// display if the answer is correct or wrong
+var selectAnswerHandler = function(event) {
+    var questionZoneEl= document.getElementById("question-zone");
+    if (event.target.getAttribute("answer-id") == questionsBank[event.target.getAttribute("question-id")].correctAnswerIndex)
+        {//display correct 
+        var correctAnswerEl = document.createElement("p");
+        correctAnswerEl.id = "correct-answer";
+        correctAnswerEl.textContent = "Correct";
+        questionZoneEl.appendChild(correctAnswerEl);
+        }
+    else
+        {//display wrong 
+        var correctAnswerEl = document.createElement("p");
+        correctAnswerEl.id = "correct-answer";
+        correctAnswerEl.textContent = "Wrong";
+        questionZoneEl.appendChild(correctAnswerEl);
+        };
+};
+
 // display the questions
 var quizzQuestionDisplay = function() {
 
@@ -73,7 +92,8 @@ var quizzQuestionDisplay = function() {
         }
 
         // listen to choice selection => display correct answer and clear question i
-        
+        questionZoneEl.addEventListener("click", selectAnswerHandler);
+
     }
 };
 
