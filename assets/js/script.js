@@ -49,28 +49,64 @@ var myTimer = function(){
     if (timer <=0 ) {clearInterval(myTimerVar);};
 };
 
+// display All Done Page
+var allDoneDisplay = function() {
+    var questionZoneEl= document.getElementById("question-zone");
+    questionZoneEl.remove();
+
+    var sectionEl = document.createElement("section");
+    sectionEl.id = "all-done";
+    sectionEl.innerHTML = "<h2>All Done!</h2><p>Your final score is <span id='score'></span>.</p><p>Enter initials: </p>";
+    pageContentEl.appendChild(sectionEl);
+
+    var scoreEl= document.getElementById("score");
+    scoreEl.textContent = timer.toString() ;
+    
+
+};
+
 // display if the answer is correct or wrong
 var selectAnswerHandler = function(event) {
     var questionZoneEl= document.getElementById("question-zone");
+    var correctAnswerEl = document.createElement("p");
+    correctAnswerEl.id = "correct-answer";
     if (event.target.getAttribute("answer-id") == questionsBank[event.target.getAttribute("question-id")].correctAnswerIndex)
         {//display correct 
-        var correctAnswerEl = document.createElement("p");
-        correctAnswerEl.id = "correct-answer";
         correctAnswerEl.textContent = "Correct";
         questionZoneEl.appendChild(correctAnswerEl);
+     
+        setTimeout(timerDisplay,3000);
+
+            if (parseInt(event.target.getAttribute("question-id"))< questionsBank.length-1 && timer>0)
+            {
+            quizzQuestionDisplay(parseInt(event.target.getAttribute("question-id"))+1);
+            }
+            else 
+            {clearInterval(myTimerVar);
+            timerDisplay();
+            allDoneDisplay();
+            };
         }
     else
-        {//display wrong 
-        var correctAnswerEl = document.createElement("p");
-        correctAnswerEl.id = "correct-answer";
+        {//display wrong
+        timer = timer -10; 
         correctAnswerEl.textContent = "Wrong";
         questionZoneEl.appendChild(correctAnswerEl);
-        timer = timer -10;
+ 
+        setTimeout(timerDisplay,3000);
+
+            if (parseInt(event.target.getAttribute("question-id"))< questionsBank.length-1 && timer>0)
+            {
+            quizzQuestionDisplay(parseInt(event.target.getAttribute("question-id"))+1);
+            }
+            else 
+            {clearInterval(myTimerVar);
+            timerDisplay();
+            allDoneDisplay();
+            };
         };
-        
-        myvarpause = setTimeout(timerDisplay(),3000);
-        if (parseInt(event.target.getAttribute("question-id"))< questionsBank.length)
-        {quizzQuestionDisplay(parseInt(event.target.getAttribute("question-id"))+1)};
+ 
+       
     
 };
 
