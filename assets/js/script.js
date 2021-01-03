@@ -65,7 +65,9 @@ var selectAnswerHandler = function(event) {
         correctAnswerEl.id = "correct-answer";
         correctAnswerEl.textContent = "Wrong";
         questionZoneEl.appendChild(correctAnswerEl);
+        timer = timer -10;
         };
+    timerDisplay();
 };
 
 // display the questions
@@ -111,7 +113,7 @@ var startQuizButtonHandler = function() {
 
     timerDisplay();
     quizzQuestionDisplay();
-    myTimerVar = setInterval(myTimer, 3600)
+    myTimerVar = setInterval(myTimer, 60)
 };
 
 // for Quiz Start button
