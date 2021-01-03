@@ -20,19 +20,19 @@ questionsBank.push(questionDataObj2);
 
 // variable to hold the main sections of the html
 
-var timerParentZoneEl = document.querySelector(".timer-parent-zone");
-var pageContentEl = document.querySelector(".page-content");
+var timerParentZoneEl = document.getElementById("timer-parent-zone");
+var pageContentEl = document.getElementById("page-content");
 
 
 // display the timer
 var timerDisplay = function() {
     var myobj = document.getElementById("timer-zone");
     myobj.remove(); 
-    console.log(timer.toString());
-    console.log(timer);
+    
     var pageTimerEl = document.createElement("span");
     pageTimerEl.id = "timer-zone";
     pageTimerEl.textContent = timer.toString();
+    console.log(pageTimerEl);
     timerParentZoneEl.appendChild(pageTimerEl);
 };
 
