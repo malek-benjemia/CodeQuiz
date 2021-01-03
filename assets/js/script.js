@@ -59,7 +59,7 @@ questionsBank.push(questionDataObj4);
 // variable to hold the main sections of the html
 var timerParentZoneEl = document.getElementById("timer-parent-zone");
 var pageContentEl = document.getElementById("page-content");
-var begSectionEl = document.getElementById("begin-section");
+var startQuizButtonEl = document.getElementById("start-quiz");
 
 // display the timer
 var timerDisplay = function() {
@@ -215,4 +215,4 @@ var startQuizButtonHandler = function() {
 };
 
 // for Quiz Start button
-begSectionEl.addEventListener("click", startQuizButtonHandler);
+startQuizButtonEl.addEventListener("click", startQuizButtonHandler);
